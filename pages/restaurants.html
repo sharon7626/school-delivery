@@ -9,16 +9,27 @@
   <body>
     <header class="site-header">
       <a class="brand" href="../index.html">校園外送</a>
-      <nav aria-label="主要導覽"><a href="../index.html">首頁</a><a href="menu.html">菜單</a><a href="cart.html">購物車 <span data-cart-count>0</span></a></nav>
+      <nav aria-label="主要導覽">
+        <a href="restaurants.html">餐廳</a>
+        <a href="menu.html">菜單</a>
+        <a href="cart.html">購物車 <span data-cart-count>0</span></a>
+        <a href="order-status.html">訂單狀態</a>
+        <a href="profile.html">會員中心</a>
+        <a href="contact.html">聯絡我們</a>
+      </nav>
     </header>
     <main class="container">
-      <section class="page-heading"><p class="eyebrow">選擇餐廳</p><h1>附近餐廳</h1><p class="muted">選一間餐廳，再查看它的菜單。</p></section>
+      <section class="page-heading">
+        <p class="eyebrow">選擇餐廳</p>
+        <h1>附近餐廳</h1>
+        <p class="muted">選一間餐廳，再查看它的菜單。</p>
+      </section>
       <section class="grid" aria-label="餐廳列表">
         <article class="card">
           <h2>晴天咖啡</h2>
           <p class="muted">咖啡輕食</p>
           <p><strong>營業時間：</strong><time datetime="08:00">08:00</time>–<time datetime="18:00">18:00</time></p>
-          <a class="button" href="menu.html">查看菜單</a>
+          <a class="button" href="menu.html?restaurant=sunny-cafe">查看菜單</a>
         </article>
 
         <article class="card">
@@ -36,6 +47,7 @@
         </article>
       </section>
     </main>
-    <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
+    <footer>© 2026 校園外送</footer>
+    <script src="../js/app.js"></script>
   </body>
 </html>

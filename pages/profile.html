@@ -9,30 +9,49 @@
   <body>
     <header class="site-header">
       <a class="brand" href="../index.html">校園外送</a>
-      <nav aria-label="主要導覽"><a href="contact.html">聯絡我們</a><a href="order-status.html">訂單狀態</a><a href="../index.html">首頁</a></nav>
+      <nav aria-label="主要導覽">
+        <a href="restaurants.html">餐廳</a>
+        <a href="menu.html">菜單</a>
+        <a href="cart.html">購物車 <span data-cart-count>0</span></a>
+        <a href="order-status.html">訂單狀態</a>
+        <a href="profile.html">會員中心</a>
+        <a href="contact.html">聯絡我們</a>
+      </nav>
     </header>
     <main class="container">
-      <section class="page-heading"><p class="eyebrow">會員中心</p><h1>你好，王同學</h1><p class="muted">這裡提供使用者資料與客服聯絡資訊。</p></section>
+      <section class="page-heading">
+        <p class="eyebrow">會員中心</p>
+        <h1 data-profile-greeting>會員中心</h1>
+        <p class="muted">管理常用的訂購資料，結帳時會自動帶入。</p>
+      </section>
+
       <section class="panel" aria-labelledby="member-profile-title">
-        <h2 id="member-profile-title">會員資料</h2>
-        <p class="notice">以下內容皆為課堂練習使用的示範資料，並非真實個人資料。</p>
-        <div class="grid">
-          <article class="card">
-            <h3>姓名</h3>
-            <p>王同學（範例）</p>
-          </article>
-          <article class="card">
-            <h3>常用地址</h3>
-            <p>校園第一宿舍（範例）</p>
-          </article>
-          <article class="card">
-            <h3>常用付款方式</h3>
-            <p>取餐時付款（示範）</p>
-          </article>
-        </div>
-        <a class="button" href="contact.html">聯絡客服</a>
+        <h2 id="member-profile-title">常用資料</h2>
+        <p class="muted">資料只會儲存在你自己的瀏覽器中。</p>
+        <form data-profile-form>
+          <div class="form-grid">
+            <label class="field">姓名
+              <input name="name" autocomplete="name" />
+            </label>
+            <label class="field">聯絡電話
+              <input name="phone" type="tel" autocomplete="tel" />
+            </label>
+            <label class="field">常用送達地點
+              <input name="place" placeholder="例：第一宿舍 1 樓大廳" />
+            </label>
+          </div>
+          <button type="submit">儲存</button>
+          <p class="status-message" data-profile-saved aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="member-orders-title">
+        <h2 id="member-orders-title">我的訂單</h2>
+        <p class="muted">查看歷史訂單與目前的外送進度。</p>
+        <a class="button" href="order-status.html">前往訂單狀態</a>
       </section>
     </main>
-    <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
+    <footer>© 2026 校園外送</footer>
+    <script src="../js/app.js"></script>
   </body>
 </html>
