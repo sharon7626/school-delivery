@@ -133,6 +133,43 @@ button {
   font-weight: 700;
 }
 
+.order-progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.progress-step {
+  padding: 18px;
+  border: 1px solid #d7dee8;
+  border-radius: 10px;
+  color: #5d6b79;
+}
+
+.progress-step strong,
+.progress-step span {
+  display: block;
+}
+
+.progress-step span {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.progress-step.is-complete {
+  border-color: #8bc5b0;
+  background: #edf8f4;
+  color: #2e7d61;
+}
+
+.progress-step.is-current {
+  border: 2px solid #c87542;
+  background: #fff1e7;
+  color: #8a4823;
+}
+
 footer {
   padding-top: 28px;
   padding-bottom: 36px;
@@ -145,5 +182,9 @@ footer {
     flex-direction: column;
     gap: 14px;
     padding-top: 18px;
+  }
+
+  .order-progress {
+    grid-template-columns: 1fr;
   }
 }
