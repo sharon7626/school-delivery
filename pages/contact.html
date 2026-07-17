@@ -13,8 +13,31 @@
     </header>
     <main class="container">
       <section class="page-heading"><p class="eyebrow">需要協助嗎？</p><h1>聯絡我們</h1><p class="muted">使用模擬客服資訊，不要填入真實個人資料。</p></section>
-      <!-- 成員 6：完成聯絡資訊或一個不送出的意見表單。 -->
-      <section class="placeholder"><h2>客服資訊</h2><p>待完成：加入服務時間、電子信箱與常見問題連結。</p></section>
+      <section class="panel" aria-labelledby="support-title">
+        <h2 id="support-title">客服資訊</h2>
+        <p class="notice">本頁聯絡方式均為課堂練習用的示範資料。</p>
+        <div class="grid">
+          <article class="card">
+            <h3>服務時間</h3>
+            <p>星期一至星期五 09:00–18:00</p>
+          </article>
+          <article class="card">
+            <h3>客服信箱</h3>
+            <p><a href="mailto:support@example.com">support@example.com</a></p>
+          </article>
+          <article class="card">
+            <h3>問題處理</h3>
+            <p><a href="#faq">查看常見問題</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="faq" class="panel" aria-labelledby="faq-title">
+        <h2 id="faq-title">常見問題</h2>
+        <h3>如何查看外送進度？</h3>
+        <p>前往「訂單狀態」頁面，即可查看目前的模擬配送進度。</p>
+        <a class="button" href="order-status.html">查看訂單狀態</a>
+      </section>
     </main>
     <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
   </body>
