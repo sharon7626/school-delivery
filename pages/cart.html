@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>校園外送｜購物車</title>
     <link rel="stylesheet" href="../css/base.css" />
+    <style>
+      .cart-lines {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .cart-line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid #d7dee8;
+      }
+
+      .cart-line .item-detail {
+        display: block;
+        font-size: 14px;
+      }
+
+      .cart-line.total {
+        border-bottom: 0;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      button[disabled] {
+        opacity: 0.6;
+        cursor: default;
+      }
+
+      .order-result a {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -13,9 +49,47 @@
     </header>
     <main class="container">
       <section class="page-heading"><p class="eyebrow">訂單確認</p><h1>購物車</h1><p class="muted">這是前台原型，不會真的送出訂單。</p></section>
-      <!-- 成員 4：將此區塊改為購物車摘要、總金額與模擬下單按鈕。 -->
-      <section class="placeholder"><h2>購物車摘要</h2><p>待完成：顯示至少兩項餐點、運費、總金額與一個按鈕。</p></section>
+      <section class="panel" aria-labelledby="cart-heading">
+        <h2 id="cart-heading">購物車摘要</h2>
+        <p class="muted">晴天咖啡・外送</p>
+        <ul class="cart-lines">
+          <li class="cart-line">
+            <span>經典拿鐵<span class="item-detail muted">NT$120 × 2</span></span>
+            <span>NT$240</span>
+          </li>
+          <li class="cart-line">
+            <span>燻雞帕尼尼<span class="item-detail muted">NT$150 × 1</span></span>
+            <span>NT$150</span>
+          </li>
+          <li class="cart-line">
+            <span>小計</span>
+            <span>NT$390</span>
+          </li>
+          <li class="cart-line">
+            <span>運費</span>
+            <span>NT$30</span>
+          </li>
+          <li class="cart-line total">
+            <span>總金額</span>
+            <span>NT$420</span>
+          </li>
+        </ul>
+        <button type="button" data-place-order>模擬下單</button>
+        <p class="status-message order-result" data-order-result aria-live="polite" hidden>
+          ✓ 訂單已送出（模擬），不會真的付款。<a href="order-status.html">查看訂單進度 →</a>
+        </p>
+      </section>
     </main>
     <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
+    <script>
+      const placeOrderButton = document.querySelector("[data-place-order]");
+      const orderResult = document.querySelector("[data-order-result]");
+
+      placeOrderButton.addEventListener("click", () => {
+        orderResult.hidden = false;
+        placeOrderButton.disabled = true;
+        placeOrderButton.textContent = "訂單已送出";
+      });
+    </script>
   </body>
 </html>
