@@ -9,28 +9,26 @@
   <body>
     <header class="site-header">
       <a class="brand" href="../index.html">校園外送</a>
-      <nav aria-label="主要導覽"><a href="cart.html">購物車</a><a href="profile.html">會員中心</a><a href="../index.html">首頁</a></nav>
+      <nav aria-label="主要導覽">
+        <a href="restaurants.html">餐廳</a>
+        <a href="menu.html">菜單</a>
+        <a href="cart.html">購物車 <span data-cart-count>0</span></a>
+        <a href="order-status.html">訂單狀態</a>
+        <a href="profile.html">會員中心</a>
+        <a href="contact.html">聯絡我們</a>
+      </nav>
     </header>
     <main class="container">
-      <section class="page-heading"><p class="eyebrow">外送進度</p><h1>訂單狀態</h1><p class="muted">使用模擬資料呈現目前的配送進度。</p></section>
-      <section class="panel" aria-labelledby="order-progress-title">
-        <h2 id="order-progress-title">目前進度</h2>
-        <ol class="order-progress">
-          <li class="progress-step is-complete">
-            <strong>店家接單</strong>
-            <span>店家已確認訂單</span>
-          </li>
-          <li class="progress-step is-current" aria-current="step">
-            <strong>餐點製作中</strong>
-            <span>目前進行中</span>
-          </li>
-          <li class="progress-step">
-            <strong>外送途中</strong>
-            <span>等待外送員取餐</span>
-          </li>
-        </ol>
+      <section class="page-heading">
+        <p class="eyebrow">外送進度</p>
+        <h1>訂單狀態</h1>
+        <p class="muted">這裡會列出你送出的每一筆訂單與目前進度。</p>
       </section>
+
+      <!-- 訂單清單由 app.js 依 localStorage 中的訂單紀錄產生 -->
+      <div data-orders-page></div>
     </main>
-    <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
+    <footer>© 2026 校園外送</footer>
+    <script src="../js/app.js"></script>
   </body>
 </html>
