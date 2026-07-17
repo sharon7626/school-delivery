@@ -21,65 +21,17 @@
     <main class="container">
       <section class="page-heading">
         <p class="eyebrow">美味遞送</p>
-        <h1>晴天咖啡精選菜單</h1>
+        <!-- 動態顯示餐廳名稱 -->
+        <h1 id="restaurant-title">晴天咖啡</h1>
+        <p id="restaurant-subtitle" class="muted">—— 喝的是苦澀，品的是人生，笑一笑就過了 ——</p>
         
         <!-- data-status-message 點擊加入時會自動連動 app.js，顯示：已加入「餐點名稱」 -->
         <p class="status-message" data-status-message></p>
       </section>
 
-      <!-- 使用 base.css 現成的 .grid 與 .card 樣式建立 3 張餐點卡片 -->
-      <div class="grid">
-        <!-- 卡片 1 -->
-        <div class="card">
-          <h3>經典拿鐵</h3>
-          <p class="muted">嚴選優質咖啡豆與鮮乳的完美比例，口感綿密滑順，每日晨間首選。</p>
-          <p style="font-weight: bold; color: #2e7d61; font-size: 1.1rem; margin: 12px 0;">$120</p>
-          
-          <!-- 數量加減器（手動增減數量） -->
-          <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
-            <div style="display: flex; align-items: center; border: 1px solid #d7dee8; border-radius: 6px; overflow: hidden; background: #fff;">
-              <button class="qty-btn" onclick="changeQty(this, -1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0;">-</button>
-              <span class="qty-val" style="padding: 0 16px; font-weight: bold; min-width: 40px; text-align: center;">1</span>
-              <button class="qty-btn" onclick="changeQty(this, 1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0;">+</button>
-            </div>
-            <!-- 保持原有的 data-add-to-cart 屬性，點擊直接觸發原本 js 的+1與提示 -->
-            <button class="button" data-add-to-cart="經典拿鐵" style="margin-top: 0; flex: 1;">加入購物車</button>
-          </div>
-        </div>
-
-        <!-- 卡片 2 -->
-        <div class="card">
-          <h3>燻雞帕尼尼</h3>
-          <p class="muted">香熱現烤熱壓吐司，內含飽滿鮮嫩燻雞肉與牽絲起司，香氣四溢。</p>
-          <p style="font-weight: bold; color: #2e7d61; font-size: 1.1rem; margin: 12px 0;">$150</p>
-          
-          <!-- 數量加減器（手動增減數量） -->
-          <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
-            <div style="display: flex; align-items: center; border: 1px solid #d7dee8; border-radius: 6px; overflow: hidden; background: #fff;">
-              <button class="qty-btn" onclick="changeQty(this, -1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0;">-</button>
-              <span class="qty-val" style="padding: 0 16px; font-weight: bold; min-width: 40px; text-align: center;">1</span>
-              <button class="qty-btn" onclick="changeQty(this, 1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0;">+</button>
-            </div>
-            <button class="button" data-add-to-cart="燻雞帕尼尼" style="margin-top: 0; flex: 1;">加入購物車</button>
-          </div>
-        </div>
-
-        <!-- 卡片 3 -->
-        <div class="card">
-          <h3>美式黑咖啡</h3>
-          <p class="muted">經典純粹的黑咖啡，保留最原始的香醇與清爽回甘，無糖零負擔。</p>
-          <p style="font-weight: bold; color: #2e7d61; font-size: 1.1rem; margin: 12px 0;">$90</p>
-          
-          <!-- 數量加減器（手動增減數量） -->
-          <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
-            <div style="display: flex; align-items: center; border: 1px solid #d7dee8; border-radius: 6px; overflow: hidden; background: #fff;">
-              <button class="qty-btn" onclick="changeQty(this, -1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0;">-</button>
-              <span class="qty-val" style="padding: 0 16px; font-weight: bold; min-width: 40px; text-align: center;">1</span>
-              <button class="qty-btn" onclick="changeQty(this, 1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0;">+</button>
-            </div>
-            <button class="button" data-add-to-cart="美式黑咖啡" style="margin-top: 0; flex: 1;">加入購物車</button>
-          </div>
-        </div>
+      <!-- 菜單區域 (會由 JS 根據網址參數動態渲染) -->
+      <div id="menu-container" class="grid">
+        <!-- 預設載入晴天咖啡菜單 -->
       </div>
     </main>
     <footer>校園外送小組協作練習</footer>
@@ -87,14 +39,85 @@
     <!-- 1. 引入原本的 app.js (點擊「加入購物車」依然會執行原本的 +1 邏輯) -->
     <script src="../js/app.js"></script>
 
-    <!-- 2. 只在這裡控制卡片上 + - 按鈕的數字切換 (不影響全域) -->
+    <!-- 2. 動態切換三間餐廳菜單 + 控制加減數量按鈕的 JS 邏輯 -->
     <script>
+      // 1. 定義三間餐廳的菜單資料
+      const menus = {
+        // 類別一：晴天咖啡 (名字改回晴天咖啡，保留超好笑諧音！)
+        "cafe": {
+          title: "晴天咖啡 ☕",
+          subtitle: "—— 喝的是苦澀，品的是人生，笑一笑就過了 ——",
+          items: [
+            { name: "真的眼都美式", detail: "經典美式。老闆問你週末要不要加班，你只能喝一口回這句。", price: 100 },
+            { name: "拿你沒轍拿鐵", detail: "原味拿鐵。適合買來請身邊那個總是讓你哭笑不得的伴侶或朋友。", price: 130 },
+            { name: "厭世麥來拿鐵", detail: "燕麥奶拿鐵。生人勿近，今天只想安靜喝咖啡。（麥來 = 台語「別來」）", price: 150 },
+            { name: "冰的啦！滴咖啡", detail: "冰滴咖啡。遇到奧客或雷隊友時，最想點的一杯。（冰的啦 = 台語「翻桌」）", price: 180 },
+            { name: "搞了個大烏龍茶", detail: "冷泡烏龍茶. 人生總有幾次出包，喝口茶壓壓驚。", price: 110 },
+            { name: "一切都好說不一定布丁", detail: "焦糖烤布丁。計畫趕不上變化，不如先吃個甜點吧。（布丁 = 一定）", price: 90 }
+          ]
+        },
+        // 類別二：好食便當 (便當店諧音梗)
+        "good-meal": {
+          title: "好食諧音便當 🍱",
+          subtitle: "—— 飽足感十足，吃飽才有力氣繼續講冷笑話 ——",
+          items: [
+            { name: "真的一點都不排骨飯", detail: "經典排骨飯。老闆不給加薪，工作堆得像山，這排骨吃起來比我的命還硬。", price: 120 },
+            { name: "幾歲了還在吃雞排飯", detail: "黃金雞排飯。比臉大雞排！不管幾歲，只要有雞排吃，我永遠是長不大的快樂小孩。", price: 115 },
+            { name: "滷肉飯總比滷蛇好便當", detail: "秘製滷肉飯。人生可以暫時當個滷蛇，但至少我的便當裡要有一碗超香滷肉飯。", price: 95 }
+          ]
+        },
+        // 類別三：義起吃 (義大利麵諧音梗)
+        "pasta-together": {
+          title: "義起吃諧音義大利麵 🍝",
+          subtitle: "—— 濃郁醬汁與麵條，用幽默感填滿你空虛的胃 ——",
+          items: [
+            { name: "被逼得走投無路培根麵", detail: "奶油培根麵。生活被逼到牆角，還好還有這盤香濃起司與厚切培根來療癒我。", price: 180 },
+            { name: "眼眶有點紅醬嫩雞麵", detail: "粉紅醬嫩雞麵。番茄紅醬與白醬完美相遇，酸酸甜甜，像極了剛看完催淚電影的你。", price: 185 },
+            { name: "沒事多蛤蜊麵", detail: "青醬蛤蜊麵。手作羅勒青醬鋪滿蛤蜊，吃完這盤，祝你人生「沒事多鼓勵」！", price: 195 }
+          ]
+        }
+      };
+
+      // 2. 解析網址參數 (?restaurant=xxx)
+      const urlParams = new URLSearchParams(window.location.search);
+      const restaurantParam = urlParams.get('restaurant');
+      
+      // 預設如果沒對應到，就顯示晴天咖啡的 cafe 菜單
+      let currentKey = "cafe";
+      if (restaurantParam && menus[restaurantParam]) {
+        currentKey = restaurantParam;
+      }
+
+      const activeMenu = menus[currentKey];
+
+      // 3. 渲染網頁標題與內容
+      document.getElementById('restaurant-title').textContent = activeMenu.title;
+      document.getElementById('restaurant-subtitle').textContent = activeMenu.subtitle;
+
+      const container = document.getElementById('menu-container');
+      container.innerHTML = activeMenu.items.map(item => `
+        <div class="card">
+          <h3>${item.name}</h3>
+          <p class="muted">${item.detail}</p>
+          <p style="font-weight: bold; color: #2e7d61; font-size: 1.1rem; margin: 12px 0;">$${item.price}</p>
+          
+          <!-- 數量加減器（手動增減數量） -->
+          <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
+            <div style="display: flex; align-items: center; border: 1px solid #d7dee8; border-radius: 6px; overflow: hidden; background: #fff;">
+              <button class="qty-btn" onclick="changeQty(this, -1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0; border: none; cursor: pointer;">-</button>
+              <span class="qty-val" style="padding: 0 16px; font-weight: bold; min-width: 40px; text-align: center;">1</span>
+              <button class="qty-btn" onclick="changeQty(this, 1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0; border: none; cursor: pointer;">+</button>
+            </div>
+            <!-- 原生 data-add-to-cart 依然能被 app.js 抓到並觸發 +1 -->
+            <button class="button" data-add-to-cart="${item.name}" style="margin-top: 0; flex: 1;">加入購物車</button>
+          </div>
+        </div>
+      `).join('');
+
+      // 4. 控制加減按鈕的數字切換
       function changeQty(btn, change) {
-        // 找到目前按鈕這排的數字顯示區塊
         const qtySpan = btn.parentNode.querySelector('.qty-val');
         let currentQty = parseInt(qtySpan.textContent, 10);
-        
-        // 新數量最低為 1
         currentQty = Math.max(1, currentQty + change);
         qtySpan.textContent = currentQty;
       }
