@@ -13,8 +13,28 @@
     </header>
     <main class="container">
       <section class="page-heading"><p class="eyebrow">選擇餐廳</p><h1>附近餐廳</h1><p class="muted">選一間餐廳，再查看它的菜單。</p></section>
-      <!-- 成員 2：將此區塊改為至少三張餐廳卡片。 -->
-      <section class="placeholder"><h2>餐廳列表</h2><p>待完成：新增餐廳名稱、類型、營業時間與前往菜單按鈕。</p></section>
+      <section class="grid" aria-label="餐廳列表">
+        <article class="card">
+          <h2>晴天咖啡</h2>
+          <p class="muted">咖啡輕食</p>
+          <p><strong>營業時間：</strong><time datetime="08:00">08:00</time>–<time datetime="18:00">18:00</time></p>
+          <a class="button" href="menu.html">查看菜單</a>
+        </article>
+
+        <article class="card">
+          <h2>好食便當</h2>
+          <p class="muted">台式便當</p>
+          <p><strong>營業時間：</strong><time datetime="10:30">10:30</time>–<time datetime="20:00">20:00</time></p>
+          <a class="button" href="menu.html?restaurant=good-meal">查看菜單</a>
+        </article>
+
+        <article class="card">
+          <h2>義起吃</h2>
+          <p class="muted">義大利麵</p>
+          <p><strong>營業時間：</strong><time datetime="11:00">11:00</time>–<time datetime="21:00">21:00</time></p>
+          <a class="button" href="menu.html?restaurant=pasta-together">查看菜單</a>
+        </article>
+      </section>
     </main>
     <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
   </body>
