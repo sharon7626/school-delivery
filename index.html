@@ -6,13 +6,17 @@
     <title>校園外送｜首頁</title>
     <link rel="stylesheet" href="css/base.css" />
   </head>
+
   <body>
     <header class="site-header">
       <a class="brand" href="index.html">校園外送</a>
+
       <nav aria-label="主要導覽">
         <a href="pages/restaurants.html">餐廳</a>
         <a href="pages/menu.html">菜單</a>
-        <a href="pages/cart.html">購物車 <span data-cart-count>0</span></a>
+        <a href="pages/cart.html">
+          購物車 <span data-cart-count>0</span>
+        </a>
         <a href="pages/order-status.html">訂單狀態</a>
         <a href="pages/profile.html">會員中心</a>
       </nav>
@@ -21,19 +25,77 @@
     <main class="container">
       <section class="hero" aria-labelledby="page-title">
         <p class="eyebrow">校園限定服務</p>
+
         <h1 id="page-title">想吃什麼，送到你手上</h1>
-        <p>這是一個供小組協作練習使用的外送系統前台原型。</p>
-        <a class="button" href="pages/restaurants.html">瀏覽餐廳</a>
+
+        <p>
+          校園外送提供方便快速的餐點外送服務，
+          讓你不用離開校園，也能輕鬆享用喜歡的美食。
+        </p>
+
+        <a class="button" href="pages/restaurants.html">
+          瀏覽餐廳
+        </a>
       </section>
 
-      <!-- 成員 1：在這裡完成首頁與平台介紹功能。 -->
-      <section id="home-feature" class="placeholder" aria-labelledby="home-feature-title">
-        <h2 id="home-feature-title">平台介紹</h2>
-        <p>待完成：介紹校園外送的特色與使用流程。</p>
+      <section id="home-feature" aria-labelledby="home-feature-title">
+        <h2 id="home-feature-title">平台特色</h2>
+
+        <article>
+          <h3>多樣餐廳選擇</h3>
+          <p>
+            集合校園附近不同類型的餐廳，
+            方便你快速找到想吃的餐點。
+          </p>
+        </article>
+
+        <article>
+          <h3>簡單快速點餐</h3>
+          <p>
+            瀏覽菜單、選擇餐點並加入購物車，
+            幾個步驟即可完成訂單。
+          </p>
+        </article>
+
+        <article>
+          <h3>隨時掌握進度</h3>
+          <p>
+            從店家接單、餐點製作到外送途中，
+            都能查看目前的訂單狀態。
+          </p>
+        </article>
+      </section>
+
+      <section aria-labelledby="steps-title">
+        <h2 id="steps-title">如何使用</h2>
+
+        <ol>
+          <li>
+            <strong>選擇餐廳：</strong>
+            瀏覽合作餐廳並查看想吃的菜單。
+          </li>
+
+          <li>
+            <strong>加入購物車：</strong>
+            選擇餐點及數量，確認訂單金額。
+          </li>
+
+          <li>
+            <strong>查看訂單：</strong>
+            送出訂單後，隨時查看餐點製作與外送進度。
+          </li>
+        </ol>
+
+        <a class="button" href="pages/restaurants.html">
+          立即開始點餐
+        </a>
       </section>
     </main>
 
-    <footer>校園外送小組協作練習</footer>
+    <footer>
+      校園外送小組協作練習
+    </footer>
+
     <script src="js/app.js"></script>
   </body>
 </html>
