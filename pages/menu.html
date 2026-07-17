@@ -108,8 +108,8 @@
               <span class="qty-val" style="padding: 0 16px; font-weight: bold; min-width: 40px; text-align: center;">1</span>
               <button class="qty-btn" onclick="changeQty(this, 1)" style="margin-top: 0; padding: 8px 12px; background: #f7f8fa; color: #263545; border-radius: 0; border: none; cursor: pointer;">+</button>
             </div>
-            <!-- 原生 data-add-to-cart 依然能被 app.js 抓到並觸發 +1 -->
-            <button class="button" data-add-to-cart="${item.name}" style="margin-top: 0; flex: 1;">加入購物車</button>
+            <!-- data-price / data-restaurant 讓 app.js 能把正確的價格與餐廳一起存進購物車 -->
+            <button class="button" data-add-to-cart="${item.name}" data-price="${item.price}" data-restaurant="${currentKey}" data-restaurant-name="${activeMenu.title}" style="margin-top: 0; flex: 1;">加入購物車</button>
           </div>
         </div>
       `).join('');

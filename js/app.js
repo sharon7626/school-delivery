@@ -2,45 +2,19 @@
    校園外送 app.js（全站共用）
    購物車、訂單、會員資料都存在 localStorage，
    換頁或重新整理都不會消失（資料只存在使用者自己的瀏覽器）。
+
+   菜單資料由菜單頁自己維護，「加入購物車」按鈕只要帶上：
+     data-add-to-cart="餐點名稱"
+     data-price="價格"
+     data-restaurant="餐廳代號"（用來合併同一間店的餐點）
+     data-restaurant-name="餐廳名稱"（購物車顯示用）
+   app.js 就會自動接手購物車與下單流程。
    ========================================================== */
 
 /* 要真正開始接單時，把這裡換成店家實際收單的信箱 */
 const ORDER_EMAIL = "support@example.com";
 
 const DELIVERY_FEE = 30;
-
-const RESTAURANTS = {
-  "sunny-cafe": {
-    name: "晴天咖啡",
-    tag: "咖啡輕食",
-    hours: "08:00–18:00",
-    menu: [
-      { id: "latte", name: "經典拿鐵", desc: "嚴選優質咖啡豆與鮮乳的完美比例，口感綿密滑順，每日晨間首選。", price: 120 },
-      { id: "panini", name: "燻雞帕尼尼", desc: "香熱現烤熱壓吐司，內含飽滿鮮嫩燻雞肉與牽絲起司，香氣四溢。", price: 150 },
-      { id: "americano", name: "美式黑咖啡", desc: "經典純粹的黑咖啡，保留最原始的香醇與清爽回甘，無糖零負擔。", price: 90 },
-    ],
-  },
-  "good-meal": {
-    name: "好食便當",
-    tag: "台式便當",
-    hours: "10:30–20:00",
-    menu: [
-      { id: "chicken-leg", name: "香滷雞腿便當", desc: "滷到入味的去骨雞腿，附三樣時蔬與白飯，午餐人氣第一名。", price: 110 },
-      { id: "pork-chop", name: "酥炸排骨便當", desc: "現炸厚切排骨，外酥內嫩，配菜每日更換。", price: 100 },
-      { id: "veggie", name: "田園蔬食便當", desc: "六樣季節蔬食搭配五穀飯，清爽無負擔。", price: 90 },
-    ],
-  },
-  "pasta-together": {
-    name: "義起吃",
-    tag: "義大利麵",
-    hours: "11:00–21:00",
-    menu: [
-      { id: "carbonara", name: "培根奶油白醬麵", desc: "濃郁白醬與煙燻培根，經典不敗的人氣款。", price: 160 },
-      { id: "pomodoro", name: "番茄鮮蔬紅醬麵", desc: "新鮮番茄慢熬紅醬，酸甜開胃。", price: 140 },
-      { id: "aglio", name: "蒜香橄欖油麵", desc: "清炒蒜片與辣椒，簡單卻香氣十足。", price: 130 },
-    ],
-  },
-};
 
 /* 訂單進度：依下單後經過的分鐘數推進（尚未串接店家端的暫行做法） */
 const ORDER_STEPS = [
@@ -98,38 +72,39 @@ function escapeHtml(text) {
   ));
 }
 
-function addToCart(restaurantId, itemId, qty) {
-  const item = RESTAURANTS[restaurantId]?.menu.find((m) => m.id === itemId);
-  if (!item) return null;
+/* ---------- 加入購物車 ---------- */
+function addToCartFromButton(button) {
+  const name = button.dataset.addToCart;
+  if (!name) return null;
+
+  let price = Number(button.dataset.price);
+  if (!Number.isFinite(price)) price = 0;
+  const restaurantId = button.dataset.restaurant ?? "";
+  const restaurantName = button.dataset.restaurantName ?? "";
+
+  // 讀取同一張卡片上的數量加減器（沒有的話就當 1）
+  const qtyElement = button.closest(".card")?.querySelector(".qty-val");
+  const qty = Math.max(1, parseInt(qtyElement?.textContent ?? "1", 10) || 1);
 
   const cart = getCart();
-  const line = cart.find((l) => l.restaurantId === restaurantId && l.itemId === itemId);
+  const line = cart.find((l) => l.restaurantId === restaurantId && l.name === name);
   if (line) {
     line.qty += qty;
   } else {
-    cart.push({ restaurantId, itemId, name: item.name, price: item.price, qty });
+    cart.push({ restaurantId, restaurantName, name, price, qty });
   }
   saveCart(cart);
-  return item;
+
+  if (qtyElement) qtyElement.textContent = "1";
+  return { name, qty };
 }
 
-/* ---------- 全站點擊事件（數量加減、加入購物車、購物車明細操作） ---------- */
+/* ---------- 全站點擊事件（加入購物車、購物車明細操作） ---------- */
 document.addEventListener("click", (event) => {
-  const qtyButton = event.target.closest("[data-qty-step]");
-  if (qtyButton) {
-    const valueElement = qtyButton.closest(".qty-control").querySelector("[data-qty]");
-    const next = Math.max(1, parseInt(valueElement.textContent, 10) + Number(qtyButton.dataset.qtyStep));
-    valueElement.textContent = next;
-    return;
-  }
-
   const addButton = event.target.closest("[data-add-to-cart]");
   if (addButton) {
-    const qtyElement = addButton.closest(".add-row")?.querySelector("[data-qty]");
-    const qty = qtyElement ? parseInt(qtyElement.textContent, 10) : 1;
-    const item = addToCart(addButton.dataset.restaurant, addButton.dataset.addToCart, qty);
-    if (item) setStatusMessage(`已加入「${item.name}」× ${qty}`);
-    if (qtyElement) qtyElement.textContent = 1;
+    const added = addToCartFromButton(addButton);
+    if (added) setStatusMessage(`已加入「${added.name}」× ${added.qty}`);
     return;
   }
 
@@ -147,47 +122,6 @@ document.addEventListener("click", (event) => {
     renderCartPage();
   }
 });
-
-/* ---------- 菜單頁 ---------- */
-function initMenuPage() {
-  const grid = document.querySelector("[data-menu-grid]");
-  if (!grid) return;
-
-  const requested = new URLSearchParams(window.location.search).get("restaurant");
-  const restaurantId = RESTAURANTS[requested] ? requested : "sunny-cafe";
-  const restaurant = RESTAURANTS[restaurantId];
-
-  document.title = `校園外送｜${restaurant.name}菜單`;
-  const titleElement = document.querySelector("[data-menu-title]");
-  if (titleElement) titleElement.textContent = `${restaurant.name}菜單`;
-  const hoursElement = document.querySelector("[data-menu-hours]");
-  if (hoursElement) hoursElement.textContent = `${restaurant.tag}・營業時間 ${restaurant.hours}`;
-
-  const tabs = document.querySelector("[data-menu-tabs]");
-  if (tabs) {
-    tabs.innerHTML = Object.entries(RESTAURANTS)
-      .map(([id, r]) => `<a href="menu.html?restaurant=${id}"${id === restaurantId ? ' class="is-active" aria-current="page"' : ""}>${r.name}</a>`)
-      .join("");
-  }
-
-  grid.innerHTML = restaurant.menu
-    .map((item) => `
-      <div class="card">
-        <h3>${item.name}</h3>
-        <p class="muted">${item.desc}</p>
-        <p class="price">${money(item.price)}</p>
-        <div class="add-row">
-          <span class="qty-control">
-            <button type="button" class="qty-btn" data-qty-step="-1" aria-label="減少數量">−</button>
-            <span class="qty-val" data-qty>1</span>
-            <button type="button" class="qty-btn" data-qty-step="1" aria-label="增加數量">+</button>
-          </span>
-          <button type="button" class="button add-btn" data-add-to-cart="${item.id}" data-restaurant="${restaurantId}">加入購物車</button>
-        </div>
-      </div>
-    `)
-    .join("");
-}
 
 /* ---------- 購物車頁 ---------- */
 function renderCartPage() {
@@ -212,8 +146,8 @@ function renderCartPage() {
     .map((line, index) => `
       <li class="cart-line">
         <span>
-          <strong>${line.name}</strong>
-          <span class="item-detail muted">${RESTAURANTS[line.restaurantId]?.name ?? ""}・${money(line.price)}</span>
+          <strong>${escapeHtml(line.name)}</strong>
+          <span class="item-detail muted">${line.restaurantName ? `${escapeHtml(line.restaurantName)}・` : ""}${money(line.price)}</span>
         </span>
         <span class="line-actions">
           <span class="qty-control">
@@ -248,7 +182,7 @@ function buildOrderMailto(order) {
     order.customer.note ? `備註：${order.customer.note}` : null,
     "",
     "餐點內容：",
-    ...order.items.map((l) => `${RESTAURANTS[l.restaurantId]?.name ?? ""}｜${l.name} × ${l.qty}＝${money(l.price * l.qty)}`),
+    ...order.items.map((l) => `${l.restaurantName ? `${l.restaurantName}｜` : ""}${l.name} × ${l.qty}＝${money(l.price * l.qty)}`),
     "",
     `小計：${money(order.subtotal)}`,
     `運費：${money(order.deliveryFee)}`,
@@ -399,7 +333,6 @@ function initProfilePage() {
 
 /* ---------- 每頁初始化 ---------- */
 updateCartCount();
-initMenuPage();
 initCartPage();
 renderCartPage();
 renderOrdersPage();
