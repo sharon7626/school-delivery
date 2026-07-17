@@ -135,7 +135,7 @@ button {
 
 .order-progress {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 16px;
   padding: 0;
   list-style: none;
@@ -173,6 +173,158 @@ button {
 footer {
   padding-top: 28px;
   padding-bottom: 36px;
+  font-size: 14px;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d7dee8;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+}
+
+.field {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.form-grid .field-wide {
+  grid-column: 1 / -1;
+}
+
+.price {
+  margin: 12px 0;
+  color: #2e7d61;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.add-row .button {
+  flex: 1;
+  margin-top: 0;
+}
+
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #d7dee8;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.qty-btn {
+  margin-top: 0;
+  padding: 8px 12px;
+  border-radius: 0;
+  background: #f7f8fa;
+  color: #263545;
+}
+
+.qty-val {
+  min-width: 40px;
+  padding: 0 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.menu-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.menu-tabs a {
+  padding: 6px 14px;
+  border: 1px solid #d7dee8;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 14px;
+}
+
+.menu-tabs a.is-active {
+  border-color: #2e7d61;
+  background: #2e7d61;
+  color: #fff;
+}
+
+.cart-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #d7dee8;
+}
+
+.cart-line .item-detail {
+  display: block;
+  font-size: 14px;
+}
+
+.cart-line.total {
+  border-bottom: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.line-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.line-total {
+  min-width: 72px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.remove-btn {
+  margin-top: 0;
+  padding: 6px 10px;
+  border: 1px solid #d7dee8;
+  background: #fff;
+  color: #5d6b79;
   font-size: 14px;
 }
 

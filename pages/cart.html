@@ -5,91 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>校園外送｜購物車</title>
     <link rel="stylesheet" href="../css/base.css" />
-    <style>
-      .cart-lines {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .cart-line {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 12px 0;
-        border-bottom: 1px solid #d7dee8;
-      }
-
-      .cart-line .item-detail {
-        display: block;
-        font-size: 14px;
-      }
-
-      .cart-line.total {
-        border-bottom: 0;
-        font-size: 20px;
-        font-weight: 700;
-      }
-
-      button[disabled] {
-        opacity: 0.6;
-        cursor: default;
-      }
-
-      .order-result a {
-        text-decoration: underline;
-      }
-    </style>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="../index.html">校園外送</a>
-      <nav aria-label="主要導覽"><a href="menu.html">菜單</a><a href="order-status.html">訂單狀態</a><a href="../index.html">首頁</a></nav>
+      <nav aria-label="主要導覽">
+        <a href="restaurants.html">餐廳</a>
+        <a href="menu.html">菜單</a>
+        <a href="cart.html">購物車 <span data-cart-count>0</span></a>
+        <a href="order-status.html">訂單狀態</a>
+        <a href="profile.html">會員中心</a>
+        <a href="contact.html">聯絡我們</a>
+      </nav>
     </header>
     <main class="container">
-      <section class="page-heading"><p class="eyebrow">訂單確認</p><h1>購物車</h1><p class="muted">這是前台原型，不會真的送出訂單。</p></section>
-      <section class="panel" aria-labelledby="cart-heading">
+      <section class="page-heading">
+        <p class="eyebrow">訂單確認</p>
+        <h1>購物車</h1>
+        <p class="muted">確認餐點與送達資訊後，就可以送出訂單。</p>
+      </section>
+
+      <section class="panel" aria-labelledby="cart-heading" data-cart-section>
         <h2 id="cart-heading">購物車摘要</h2>
-        <p class="muted">晴天咖啡・外送</p>
-        <ul class="cart-lines">
-          <li class="cart-line">
-            <span>經典拿鐵<span class="item-detail muted">NT$120 × 2</span></span>
-            <span>NT$240</span>
-          </li>
-          <li class="cart-line">
-            <span>燻雞帕尼尼<span class="item-detail muted">NT$150 × 1</span></span>
-            <span>NT$150</span>
-          </li>
-          <li class="cart-line">
-            <span>小計</span>
-            <span>NT$390</span>
-          </li>
-          <li class="cart-line">
-            <span>運費</span>
-            <span>NT$30</span>
-          </li>
-          <li class="cart-line total">
-            <span>總金額</span>
-            <span>NT$420</span>
-          </li>
-        </ul>
-        <button type="button" data-place-order>模擬下單</button>
-        <p class="status-message order-result" data-order-result aria-live="polite" hidden>
-          ✓ 訂單已送出（模擬），不會真的付款。<a href="order-status.html">查看訂單進度 →</a>
-        </p>
+        <!-- 明細由 app.js 依 localStorage 中的購物車內容產生 -->
+        <div data-cart-root></div>
+      </section>
+
+      <section class="panel" aria-labelledby="checkout-heading" data-checkout-section hidden>
+        <h2 id="checkout-heading">送達資訊</h2>
+        <form data-checkout-form>
+          <div class="form-grid">
+            <label class="field">姓名
+              <input name="name" required autocomplete="name" />
+            </label>
+            <label class="field">聯絡電話
+              <input name="phone" type="tel" required autocomplete="tel" />
+            </label>
+            <label class="field">送達地點
+              <input name="place" required placeholder="例：第一宿舍 1 樓大廳" />
+            </label>
+            <label class="field">付款方式
+              <select name="payment">
+                <option value="cash">送達時現金付款</option>
+              </select>
+            </label>
+            <label class="field field-wide">備註（選填）
+              <textarea name="note" rows="2" placeholder="例：飲料去冰、不要香菜"></textarea>
+            </label>
+          </div>
+          <button type="submit">送出訂單</button>
+        </form>
+      </section>
+
+      <section class="panel" data-order-result hidden aria-live="polite">
+        <h2>✓ 訂單已送出</h2>
+        <p>訂單編號：<strong data-order-id></strong></p>
+        <p class="muted">你可以隨時到「訂單狀態」查看外送進度。</p>
+        <a class="button" href="order-status.html">查看訂單進度</a>
+        <a class="button" data-order-mailto href="#">用 Email 通知店家</a>
       </section>
     </main>
-    <footer>校園外送小組協作練習</footer><script src="../js/app.js"></script>
-    <script>
-      const placeOrderButton = document.querySelector("[data-place-order]");
-      const orderResult = document.querySelector("[data-order-result]");
-
-      placeOrderButton.addEventListener("click", () => {
-        orderResult.hidden = false;
-        placeOrderButton.disabled = true;
-        placeOrderButton.textContent = "訂單已送出";
-      });
-    </script>
+    <footer>© 2026 校園外送</footer>
+    <script src="../js/app.js"></script>
   </body>
 </html>
