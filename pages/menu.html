@@ -22,7 +22,7 @@
       <section class="page-heading">
         <p class="eyebrow">美味遞送</p>
         <!-- 動態顯示餐廳名稱 -->
-        <h1 id="restaurant-title">諧音梗咖啡廳</h1>
+        <h1 id="restaurant-title">晴天咖啡</h1>
         <p id="restaurant-subtitle" class="muted">—— 喝的是苦澀，品的是人生，笑一笑就過了 ——</p>
         
         <!-- data-status-message 點擊加入時會自動連動 app.js，顯示：已加入「餐點名稱」 -->
@@ -31,7 +31,7 @@
 
       <!-- 菜單區域 (會由 JS 根據網址參數動態渲染) -->
       <div id="menu-container" class="grid">
-        <!-- 預設載入諧音梗咖啡廳菜單 -->
+        <!-- 預設載入晴天咖啡菜單 -->
       </div>
     </main>
     <footer>校園外送小組協作練習</footer>
@@ -41,18 +41,18 @@
 
     <!-- 2. 動態切換三間餐廳菜單 + 控制加減數量按鈕的 JS 邏輯 -->
     <script>
-      // 1. 定義三間餐廳的菜單資料（全部都換成幽默的諧音梗囉！）
+      // 1. 定義三間餐廳的菜單資料
       const menus = {
-        // 類別一：晴天咖啡 (超有梗諧音菜單)
+        // 類別一：晴天咖啡 (名字改回晴天咖啡，保留超好笑諧音！)
         "cafe": {
-          title: "諧音梗咖啡廳 ☕",
+          title: "晴天咖啡 ☕",
           subtitle: "—— 喝的是苦澀，品的是人生，笑一笑就過了 ——",
           items: [
             { name: "真的眼都美式", detail: "經典美式。老闆問你週末要不要加班，你只能喝一口回這句。", price: 100 },
             { name: "拿你沒轍拿鐵", detail: "原味拿鐵。適合買來請身邊那個總是讓你哭笑不得的伴侶或朋友。", price: 130 },
             { name: "厭世麥來拿鐵", detail: "燕麥奶拿鐵。生人勿近，今天只想安靜喝咖啡。（麥來 = 台語「別來」）", price: 150 },
             { name: "冰的啦！滴咖啡", detail: "冰滴咖啡。遇到奧客或雷隊友時，最想點的一杯。（冰的啦 = 台語「翻桌」）", price: 180 },
-            { name: "搞了個大烏龍茶", detail: "冷泡烏龍茶。人生總有幾次出包，喝口茶壓壓驚。", price: 110 },
+            { name: "搞了個大烏龍茶", detail: "冷泡烏龍茶. 人生總有幾次出包，喝口茶壓壓驚。", price: 110 },
             { name: "一切都好說不一定布丁", detail: "焦糖烤布丁。計畫趕不上變化，不如先吃個甜點吧。（布丁 = 一定）", price: 90 }
           ]
         },
@@ -82,7 +82,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const restaurantParam = urlParams.get('restaurant');
       
-      // 預設如果沒對應到，就顯示超級有梗的 cafe 菜單
+      // 預設如果沒對應到，就顯示晴天咖啡的 cafe 菜單
       let currentKey = "cafe";
       if (restaurantParam && menus[restaurantParam]) {
         currentKey = restaurantParam;
